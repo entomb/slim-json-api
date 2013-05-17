@@ -1,6 +1,18 @@
 #slim-jsonAPI
 This is an extention to the [SLIM framework](https://github.com/codeguy/Slim) to implement json API's with great ease.
 
+##instalation
+Using composer you can add use this as your composer.json
+
+```json
+    {
+        "require": {
+            "slim/slim": "2.*",
+            "entomb/slim-json-api": "dev-master"
+        }
+    }
+
+```
 
 ##Usage
 To include the middleware and view you just have to load them using the default _Slim_ way.
