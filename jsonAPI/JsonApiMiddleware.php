@@ -1,6 +1,6 @@
 <?php
 /**
- * jsonAPI - Slim extention to implement fast JSON API's
+ * jsonAPI - Slim extension to implement fast JSON API's
  *
  * @package Slim
  * @subpackage Middleware

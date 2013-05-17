@@ -1,5 +1,5 @@
 #slim-jsonAPI
-This is an extention to the [SLIM framework](https://github.com/codeguy/Slim) to implement json API's with great ease.
+This is an extension to the [SLIM framework](https://github.com/codeguy/Slim) to implement json API's with great ease.
 
 ##instalation
 Using composer you can add use this as your composer.json
