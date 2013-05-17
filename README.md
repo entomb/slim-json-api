@@ -39,6 +39,15 @@ the usage will be `$app->render(HTTP_CODE, array DATA);`
     });
 
 ```
+```json
+{
+    "msg":"welcome to my API!",
+    "error":false,
+    "status":200
+}
+
+```
+
 
 To display an error just set the `error=>true` in your data array.
 All requests have an `error` var and it default to false.
@@ -55,6 +64,14 @@ The HTTP code will also default to `200`
                 'msg'   => 'user not found',
             ));
     });
+
+```
+```json
+{
+    "msg":"user not found",
+    "error":true,
+    "status":404
+}
 
 ```
 
