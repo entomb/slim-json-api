@@ -1,0 +1,23 @@
+{
+    "name": "entomb/slim-jsonAPI",
+    "type": "library",
+    "version": "0.1",
+    "description": "Slim extention to implement fast JSON API's",
+    "keywords": ["slim","slim-framwork","json", "json-view", "API", "middleware"],
+    "homepage": "https://github.com/entomb/slim-jsonAPI",
+    "license": "GPL 3.0",
+    "authors": [
+        {
+            "name": "Jonathan Tavares",
+            "email": "the.entomb@gmail.com",
+            "homepage": "https://github.com/entomb",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.2.0"
+    },
+    "autoload": {
+        "classmap": ["jsonAPI/"]
+    }
+}
