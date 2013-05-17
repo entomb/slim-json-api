@@ -28,7 +28,9 @@ the usage will be `$app->render(HTTP_CODE, array DATA);`
 
 ```
 
-to export an error just set the 'error' variable in your data array
+to display an error just set the `error=>true` in your data array.
+All requests have an `error` var and it default to false
+The HTTP code will also default to `200`
 
 ```php
 
@@ -44,3 +46,48 @@ to export an error just set the 'error' variable in your data array
 
 ```
 
+
+##middleware
+The middleware will set some static routes for default requests.
+if you dont want to use it, you can copy this code into your bootstrap file
+
+```php
+
+    // Mirrors the API request
+    $app->get('/return', function() use ($app) {
+        $app->render(200,array(
+            'method'    => $app->request()->getMethod(),
+            'name'      => $app->request()->get('name'),
+            'headers'   => $app->request()->headers(),
+            'params'    => $app->request()->params(),
+        ));
+    });
+
+    // Generic error handler
+    $app->error(function (Exception $e) use ($app) {
+        $app->render(500,array(
+            'error' => TRUE,
+            'msg'   => $e->getMessage(),
+        ));
+    });
+
+    // Not found handler (invalid routes, invalid method types)
+    $app->notFound(function() use ($app) {
+        $app->render(400,array(
+            'error' => TRUE,
+            'msg'   => 'Invalid route',
+        ));
+    });
+
+    // Handle Empty response body
+    $app->hook('slim.after.router', function () use ($app) {
+        if (strlen($app->response()->body()) == 0) {
+            $app->render(500,array(
+                'error' => TRUE,
+                'msg'   => 'Empty response',
+            ));
+        }
+    });
+
+
+```
