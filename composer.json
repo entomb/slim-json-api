@@ -3,7 +3,7 @@
     "type": "library",
     "version": "0.1",
     "description": "Slim extention to implement fast JSON API's",
-    "keywords": ["slim","slim-framwork","json", "json-view", "API", "middleware"],
+    "keywords": ["slim","json","API","view", "middleware"],
     "homepage": "https://github.com/entomb/slim-json-api",
     "license": "GPL 3.0",
     "authors": [
