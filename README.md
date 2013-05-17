@@ -2,7 +2,7 @@
 This is an extention to the [SLIM framework](https://github.com/codeguy/Slim) to implement json API's with great ease.
 
 
-##usage
+##Usage
 To include the middleware and view you just have to load them using the default _Slim_ way.
 
 ```php
@@ -28,8 +28,8 @@ the usage will be `$app->render(HTTP_CODE, array DATA);`
 
 ```
 
-to display an error just set the `error=>true` in your data array.
-All requests have an `error` var and it default to false
+To display an error just set the `error=>true` in your data array.
+All requests have an `error` var and it default to false.
 The HTTP code will also default to `200`
 
 ```php
