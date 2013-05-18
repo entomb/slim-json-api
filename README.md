@@ -22,7 +22,7 @@ To include the middleware and view you just have to load them using the default 
 
     $app = new \Slim\Slim();
 
-    $app->view(new \JsonView());
+    $app->view(new \JsonApiView());
     $app->add(new \JsonApiMiddleware());
 ```
 
