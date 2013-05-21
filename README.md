@@ -76,7 +76,7 @@ The HTTP code will also default to `200`
 ```
 
 
-##routing specific routes to the API
+##routing specific requests to the API
 If your site is using regular HTML responses and you just want to expose an API point on a specific route, 
 you can use Slim router middlewares to define this.
 
