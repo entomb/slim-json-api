@@ -76,6 +76,33 @@ The HTTP code will also default to `200`
 ```
 
 
+##routing specific routes to the API
+If your site is using regular HTML responses and you just want to expose an API point on a specific route, 
+you can use Slim router middlewares to define this.
+
+```php
+    function APIrequest(){
+        $app = \Slim\Slim::getInstance();
+        $app->view(new \JsonApiView());
+        $app->add(new \JsonApiMiddleware());
+    }
+    
+    
+    $app->get('/home',function() use($app){
+        //regular html response
+        $app->render("template.tpl");
+    });
+    
+    $app->get('/api','APIrequest',function() use($app){
+        //this request will have full json responses
+        
+        $app->render(200,array(
+                'msg' => 'welcome to my API!',
+            ));
+    });
+```
+
+
 ##middleware
 The middleware will set some static routes for default requests.
 if you dont want to use it, you can copy this code into your bootstrap file
