@@ -7,7 +7,7 @@ Using composer you can add use this as your composer.json
 ```json
     {
         "require": {
-            "slim/slim": "2.*",
+            "slim/slim": "2.3.*",
             "entomb/slim-json-api": "dev-master"
         }
     }
