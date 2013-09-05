@@ -77,7 +77,7 @@ The HTTP code will also default to `200`
 
 
 ##routing specific requests to the API
-If your site is using regular HTML responses and you just want to expose an API point on a specific route, 
+If your site is using regular HTML responses and you just want to expose an API point on a specific route,
 you can use Slim router middlewares to define this.
 
 ```php
@@ -86,16 +86,16 @@ you can use Slim router middlewares to define this.
         $app->view(new \JsonApiView());
         $app->add(new \JsonApiMiddleware());
     }
-    
-    
+
+
     $app->get('/home',function() use($app){
         //regular html response
         $app->render("template.tpl");
     });
-    
+
     $app->get('/api','APIrequest',function() use($app){
         //this request will have full json responses
-        
+
         $app->render(200,array(
                 'msg' => 'welcome to my API!',
             ));
@@ -138,6 +138,12 @@ if you dont want to use it, you can copy this code into your bootstrap file
     // Handle Empty response body
     $app->hook('slim.after.router', function () use ($app) {
         if (strlen($app->response()->body()) == 0) {
+            //Fix sugested by: https://github.com/bdpsoft
+            //Will allow download request to flow
+            if($app->response()->header('Content-Type')==='application/octet-stream'){
+                return;
+            }
+
             $app->render(500,array(
                 'error' => TRUE,
                 'msg'   => 'Empty response',
