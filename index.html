@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Slim-json-api : Slim extension to implement fast JSON API's" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Slim-json-api</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/entomb/slim-json-api">View on GitHub</a>
+
+          <h1 id="project_title">Slim-json-api</h1>
+          <h2 id="project_tagline">Slim extension to implement fast JSON API's</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/entomb/slim-json-api/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/entomb/slim-json-api/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>
+<a name="slim-jsonapi" class="anchor" href="#slim-jsonapi"><span class="octicon octicon-link"></span></a>slim-jsonAPI</h1>
+
+<p>This is an extension to the <a href="https://github.com/codeguy/Slim">SLIM framework</a> to implement json API's with great ease.</p>
+
+<h2>
+<a name="instalation" class="anchor" href="#instalation"><span class="octicon octicon-link"></span></a>instalation</h2>
+
+<p>Using composer you can add use this as your composer.json</p>
+
+<div class="highlight highlight-json"><pre>    <span class="p">{</span>
+        <span class="nt">"require"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="nt">"slim/slim"</span><span class="p">:</span> <span class="s2">"2.3.*"</span><span class="p">,</span>
+            <span class="nt">"entomb/slim-json-api"</span><span class="p">:</span> <span class="s2">"dev-master"</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+</pre></div>
+
+<h2>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<p>To include the middleware and view you just have to load them using the default <em>Slim</em> way.
+Read more about Slim Here (<a href="https://github.com/codeguy/Slim#getting-started">https://github.com/codeguy/Slim#getting-started</a>)</p>
+
+<div class="highlight highlight-php"><pre>    <span class="k">require</span> <span class="s1">'vendor/autoload.php'</span><span class="p">;</span>
+
+    <span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\Slim\Slim</span><span class="p">();</span>
+
+    <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="k">new</span> <span class="nx">\JsonApiView</span><span class="p">());</span>
+    <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">\JsonApiMiddleware</span><span class="p">());</span>
+</pre></div>
+
+<h3>
+<a name="htaccess-sample" class="anchor" href="#htaccess-sample"><span class="octicon octicon-link"></span></a>.htaccess sample</h3>
+
+<p>Here's an .htaccess sample for simple RESTfull API's</p>
+
+<pre><code>RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
+</code></pre>
+
+<h3>
+<a name="example-method" class="anchor" href="#example-method"><span class="octicon octicon-link"></span></a>example method</h3>
+
+<p>all your requests will be returning a JSON output.
+the usage will be <code>$app-&gt;render( (int)$HTTP_CODE, (array)$DATA);</code></p>
+
+<h4>
+<a name="example-code" class="anchor" href="#example-code"><span class="octicon octicon-link"></span></a>example Code</h4>
+
+<div class="highlight highlight-php"><pre>
+    <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'/'</span><span class="p">,</span> <span class="k">function</span><span class="p">()</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="k">array</span><span class="p">(</span>
+                <span class="s1">'msg'</span> <span class="o">=&gt;</span> <span class="s1">'welcome to my API!'</span><span class="p">,</span>
+            <span class="p">));</span>
+    <span class="p">});</span>
+
+</pre></div>
+
+<h4>
+<a name="example-output" class="anchor" href="#example-output"><span class="octicon octicon-link"></span></a>example output</h4>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"msg"</span><span class="p">:</span><span class="s2">"welcome to my API!"</span><span class="p">,</span>
+    <span class="nt">"error"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span>
+    <span class="nt">"status"</span><span class="p">:</span><span class="mi">200</span>
+<span class="p">}</span>
+
+</pre></div>
+
+<h2>
+<a name="errors" class="anchor" href="#errors"><span class="octicon octicon-link"></span></a>Errors</h2>
+
+<p>To display an error just set the <code>error=&gt;true</code> in your data array.
+All requests will have an <code>error</code> param that defaults to false.</p>
+
+<div class="highlight highlight-php"><pre>
+    <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'/user/:id'</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="c1">//your code here</span>
+
+        <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="mi">404</span><span class="p">,</span><span class="k">array</span><span class="p">(</span>
+                <span class="s1">'error'</span> <span class="o">=&gt;</span> <span class="k">TRUE</span><span class="p">,</span>
+                <span class="s1">'msg'</span>   <span class="o">=&gt;</span> <span class="s1">'user not found'</span><span class="p">,</span>
+            <span class="p">));</span>
+    <span class="p">});</span>
+
+</pre></div>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"msg"</span><span class="p">:</span><span class="s2">"user not found"</span><span class="p">,</span>
+    <span class="nt">"error"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
+    <span class="nt">"status"</span><span class="p">:</span><span class="mi">404</span>
+<span class="p">}</span>
+
+</pre></div>
+
+<p>You can optionaly throw exeptions, the middleware will catch all exeptions and display error mensages.</p>
+
+<div class="highlight highlight-php"><pre>
+    <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'/user/:id'</span><span class="p">,</span> <span class="k">function</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span> <span class="k">use</span> <span class="p">(</span><span class="nv">$app</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="c1">//your code here</span>
+
+        <span class="k">if</span><span class="p">(</span><span class="o">...</span><span class="p">){</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">Exception</span><span class="p">(</span><span class="s2">"Something wrong with your request!"</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">});</span>
+
+</pre></div>
+
+<div class="highlight highlight-json"><pre><span class="p">{</span>
+    <span class="nt">"error"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nt">"msg"</span><span class="p">:</span> <span class="s2">"ERROR: Something wrong with your request!"</span><span class="p">,</span>
+    <span class="nt">"status"</span><span class="p">:</span> <span class="mi">500</span>
+<span class="p">}</span>
+
+</pre></div>
+
+<h2>
+<a name="routing-specific-requests-to-the-api" class="anchor" href="#routing-specific-requests-to-the-api"><span class="octicon octicon-link"></span></a>routing specific requests to the API</h2>
+
+<p>If your site is using regular HTML responses and you just want to expose an API point on a specific route,
+you can use Slim router middlewares to define this.</p>
+
+<div class="highlight highlight-php"><pre>    <span class="k">function</span> <span class="nf">APIrequest</span><span class="p">(){</span>
+        <span class="nv">$app</span> <span class="o">=</span> <span class="nx">\Slim\Slim</span><span class="o">::</span><span class="na">getInstance</span><span class="p">();</span>
+        <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">view</span><span class="p">(</span><span class="k">new</span> <span class="nx">\JsonApiView</span><span class="p">());</span>
+        <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="k">new</span> <span class="nx">\JsonApiMiddleware</span><span class="p">());</span>
+    <span class="p">}</span>
+
+
+    <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'/home'</span><span class="p">,</span><span class="k">function</span><span class="p">()</span> <span class="k">use</span><span class="p">(</span><span class="nv">$app</span><span class="p">){</span>
+        <span class="c1">//regular html response</span>
+        <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s2">"template.tpl"</span><span class="p">);</span>
+    <span class="p">});</span>
+
+    <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">'/api'</span><span class="p">,</span><span class="s1">'APIrequest'</span><span class="p">,</span><span class="k">function</span><span class="p">()</span> <span class="k">use</span><span class="p">(</span><span class="nv">$app</span><span class="p">){</span>
+        <span class="c1">//this request will have full json responses</span>
+
+        <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span><span class="k">array</span><span class="p">(</span>
+                <span class="s1">'msg'</span> <span class="o">=&gt;</span> <span class="s1">'welcome to my API!'</span><span class="p">,</span>
+            <span class="p">));</span>
+    <span class="p">});</span>
+</pre></div>
+
+<h2>
+<a name="middleware" class="anchor" href="#middleware"><span class="octicon octicon-link"></span></a>middleware</h2>
+
+<p>The middleware will set some static routes for default requests.
+<strong>if you dont want to use it</strong>, you can copy its content code into your bootstrap file.</p>
+
+<p><strong><em>IMPORTANT: remember to use <code>$app-&gt;config('debug', false);</code> or errors will still be printed in HTML</em></strong></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Slim-json-api maintained by <a href="https://github.com/entomb">entomb</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
