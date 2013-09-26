@@ -16,6 +16,7 @@ Using composer you can add use this as your composer.json
 
 ##Usage
 To include the middleware and view you just have to load them using the default _Slim_ way.
+Read more about Slim Here (https://github.com/codeguy/Slim#getting-started)
 
 ```php
     require 'vendor/autoload.php';
@@ -27,23 +28,18 @@ To include the middleware and view you just have to load them using the default 
 ```
 
 ###.htaccess sample
-Here's an .htaccess sample, this will redirect everything except files and directories to your `index.php`
+Here's an .htaccess sample for simple RESTfull API's
 ```
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule . /index.php [L]
-</IfModule>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [QSA,L]
 ```
 
-###index.php
-now all your requests will be returning a JSON output.
-
+###example method
+all your requests will be returning a JSON output.
 the usage will be `$app->render( (int)$HTTP_CODE, (array)$DATA);`
 
-####Code
+####example Code 
 ```php
 
     $app->get('/', function() use ($app) {
@@ -55,7 +51,7 @@ the usage will be `$app->render( (int)$HTTP_CODE, (array)$DATA);`
 ```
 
 
-####output
+####example output
 ```json
 {
     "msg":"welcome to my API!",
@@ -67,8 +63,7 @@ the usage will be `$app->render( (int)$HTTP_CODE, (array)$DATA);`
 
 ##Errors
 To display an error just set the `error=>true` in your data array.
-All requests have an `error` var and it default to false.
-The HTTP code will also default to `200`
+All requests will have an `error` param that defaults to false.
 
 ```php
 
@@ -145,53 +140,6 @@ you can use Slim router middlewares to define this.
 
 ##middleware
 The middleware will set some static routes for default requests.
-if you dont want to use it, you can copy this code into your bootstrap file.
+**if you dont want to use it**, you can copy its content code into your bootstrap file.
 
 ***IMPORTANT: remember to use `$app->config('debug', false);` or errors will still be printed in HTML***
-
-```php
-
-    // Mirrors the API request
-    $app->get('/return', function() use ($app) {
-        $app->render(200,array(
-            'method'    => $app->request()->getMethod(),
-            'name'      => $app->request()->get('name'),
-            'headers'   => $app->request()->headers(),
-            'params'    => $app->request()->params(),
-        ));
-    });
-
-    // Generic error handler
-    $app->error(function (Exception $e) use ($app) {
-        $app->render(500,array(
-            'error' => TRUE,
-            'msg'   => $e->getMessage(),
-        ));
-    });
-
-    // Not found handler (invalid routes, invalid method types)
-    $app->notFound(function() use ($app) {
-        $app->render(400,array(
-            'error' => TRUE,
-            'msg'   => 'Invalid route',
-        ));
-    });
-
-    // Handle Empty response body
-    $app->hook('slim.after.router', function () use ($app) {
-        if (strlen($app->response()->body()) == 0) {
-            //Fix sugested by: https://github.com/bdpsoft
-            //Will allow download request to flow
-            if($app->response()->header('Content-Type')==='application/octet-stream'){
-                return;
-            }
-
-            $app->render(500,array(
-                'error' => TRUE,
-                'msg'   => 'Empty response',
-            ));
-        }
-    });
-
-
-```
