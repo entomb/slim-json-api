@@ -108,9 +108,9 @@ You can optionaly throw exeptions, the middleware will catch all exeptions and d
 ```
 ```json
 {
-    error: true,
-    msg: "ERROR: Something wrong with your request!",
-    status: 500
+    "error": true,
+    "msg": "ERROR: Something wrong with your request!",
+    "status": 500
 }
 
 ```
