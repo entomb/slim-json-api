@@ -26,10 +26,24 @@ To include the middleware and view you just have to load them using the default 
     $app->add(new \JsonApiMiddleware());
 ```
 
-after this, all your requests will be returning json output.
+###.htaccess sample
+Here's an .htaccess sample, this will redirect everything except files and directories to your `index.php`
+```
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.php [L]
+</IfModule>
+```
 
-the usage will be `$app->render(HTTP_CODE, array DATA);`
+###index.php
+now all your requests will be returning a JSON output.
 
+the usage will be `$app->render( (int)$HTTP_CODE, (array)$DATA);`
+
+####Code
 ```php
 
     $app->get('/', function() use ($app) {
@@ -39,6 +53,9 @@ the usage will be `$app->render(HTTP_CODE, array DATA);`
     });
 
 ```
+
+
+####output
 ```json
 {
     "msg":"welcome to my API!",
@@ -48,7 +65,7 @@ the usage will be `$app->render(HTTP_CODE, array DATA);`
 
 ```
 
-
+##Errors
 To display an error just set the `error=>true` in your data array.
 All requests have an `error` var and it default to false.
 The HTTP code will also default to `200`
@@ -71,6 +88,29 @@ The HTTP code will also default to `200`
     "msg":"user not found",
     "error":true,
     "status":404
+}
+
+```
+
+You can optionaly throw exeptions, the middleware will catch all exeptions and display error mensages.
+
+```php
+
+    $app->get('/user/:id', function($id) use ($app) {
+
+        //your code here
+
+        if(...){
+            throw new Exception("Something wrong with your request!");
+        }
+    });
+
+```
+```json
+{
+    error: true,
+    msg: "ERROR: Something wrong with your request!",
+    status: 500
 }
 
 ```
@@ -105,7 +145,9 @@ you can use Slim router middlewares to define this.
 
 ##middleware
 The middleware will set some static routes for default requests.
-if you dont want to use it, you can copy this code into your bootstrap file
+if you dont want to use it, you can copy this code into your bootstrap file.
+
+***IMPORTANT: remember to use `$app->config('debug', false);` or errors will still be printed in HTML***
 
 ```php
 
