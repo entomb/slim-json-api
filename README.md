@@ -1,4 +1,6 @@
 #slim-jsonAPI
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/entomb/slim-json-api/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
 This is an extension to the [SLIM framework](https://github.com/codeguy/Slim) to implement json API's with great ease.
 
 ##instalation
