@@ -80,10 +80,10 @@ class JsonApiMiddleware extends \Slim\Middleware {
     }
 
     /**
-     * Call default SLIM call()
+     * Call next
      */
     function call(){
-        return $this->app->call();
+        return $this->next->call();
     }
 
     static function _errorType($type=1){
