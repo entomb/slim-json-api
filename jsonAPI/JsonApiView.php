@@ -28,17 +28,22 @@ class JsonApiView extends \Slim\View {
 
         $status = intval($status);
 
+        $response = $this->all();
+
         //append error bool
         if (!$this->has('error')) {
-            $this->set('error', false);
+            $response['error'] = false;
         }
 
         //append status code
-        $this->set('status', $status);
+        $response['status'] = $status;
+
+        //add flash messages
+        $response['flash'] = $this->data->flash->getMessages();
 
         $app->response()->status($status);
         $app->response()->header('Content-Type', 'application/json');
-        $app->response()->body(json_encode($this->all()));
+        $app->response()->body(json_encode($response));
 
         $app->stop();
     }
