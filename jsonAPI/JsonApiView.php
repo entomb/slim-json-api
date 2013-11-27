@@ -39,7 +39,12 @@ class JsonApiView extends \Slim\View {
         $response['status'] = $status;
 
         //add flash messages
-        $response['flash'] = $this->data->flash->getMessages();
+        $flash = $this->data->flash->getMessages();
+        if (count($flash)) {
+            $response['flash'] = $flash;   
+        } else {
+            unset($response['flash']);
+        }
 
         $app->response()->status($status);
         $app->response()->header('Content-Type', 'application/json');
