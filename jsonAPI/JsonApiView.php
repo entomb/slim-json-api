@@ -23,7 +23,7 @@
  */
 class JsonApiView extends \Slim\View {
 
-    public function render($status=200) {
+    public function render($status=200, $data = NULL) {
         $app = \Slim\Slim::getInstance();
 
         $status = intval($status);
