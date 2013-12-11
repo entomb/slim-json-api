@@ -38,14 +38,16 @@ class JsonApiView extends \Slim\View {
         //append status code
         $response['status'] = $status;
 
-        //add flash messages
-        $flash = $this->data->flash->getMessages();
-        if (count($flash)) {
-            $response['flash'] = $flash;   
-        } else {
-            unset($response['flash']);
-        }
-
+		//add flash messages
+		if(isset($this->data->flash) && is_object($this->data->flash)){
+		    $flash = $this->data->flash->getMessages();
+            if (count($flash)) {
+                $response['flash'] = $flash;   
+            } else {
+                unset($response['flash']);
+            }
+		}
+		
         $app->response()->status($status);
         $app->response()->header('Content-Type', 'application/json');
         $app->response()->body(json_encode($response));
