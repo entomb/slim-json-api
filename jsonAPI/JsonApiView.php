@@ -50,7 +50,14 @@ class JsonApiView extends \Slim\View {
 		
         $app->response()->status($status);
         $app->response()->header('Content-Type', 'application/json');
-        $app->response()->body(json_encode($response));
+
+        $jsonp_callback = $app->request->get('callback', null);
+
+        if($jsonp_callback !== null){
+            $app->response()->body($jsonp_callback.'('.json_encode($response).')');
+        } else {
+            $app->response()->body(json_encode($response));
+        }
 
         $app->stop();
     }
