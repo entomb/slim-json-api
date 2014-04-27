@@ -5,7 +5,7 @@
 
 This is an extension to the [SLIM framework](https://github.com/codeguy/Slim) to implement json API's with great ease.
 
-##instalation
+##Installation
 Using composer you can add use this as your composer.json
 
 ```json
@@ -32,7 +32,7 @@ Read more about Slim Here (https://github.com/codeguy/Slim#getting-started)
 ```
 
 ###.htaccess sample
-Here's an .htaccess sample for simple RESTfull API's
+Here's an .htaccess sample for simple RESTful API's
 ```
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -66,7 +66,7 @@ the usage will be `$app->render( (int)$HTTP_CODE, (array)$DATA);`
 ```
 
 ##Errors
-To display an error just set the `error=>true` in your data array.
+To display an error just set the `error => true` in your data array.
 All requests will have an `error` param that defaults to false.
 
 ```php
@@ -91,7 +91,7 @@ All requests will have an `error` param that defaults to false.
 
 ```
 
-You can optionaly throw exeptions, the middleware will catch all exeptions and display error mensages.
+You can optionally throw exceptions, the middleware will catch all exceptions and display error mensages.
 
 ```php
 
