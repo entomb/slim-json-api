@@ -39,6 +39,14 @@ class JsonApiView extends \Slim\View {
      */
     public $encodingOptions = 0;
 
+    /**
+     * Content-Type sent through the HTTP header.
+     * Default is set to "application/json",
+     * append ";charset=UTF-8" to force the charset
+     * @var string
+     */
+    public $contentType = 'application/json';
+
     public function render($status=200, $data = NULL) {
         $app = \Slim\Slim::getInstance();
 
@@ -65,7 +73,7 @@ class JsonApiView extends \Slim\View {
 		}
 		
         $app->response()->status($status);
-        $app->response()->header('Content-Type', 'application/json');
+        $app->response()->header('Content-Type', $this->contentType);
 
         $jsonp_callback = $app->request->get('callback', null);
 
