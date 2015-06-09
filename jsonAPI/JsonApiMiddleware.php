@@ -30,7 +30,6 @@ class JsonApiMiddleware extends \Slim\Middleware {
     function __construct(){
 
         $app = \Slim\Slim::getInstance();
-        $app->config('debug', false);
 
         // Mirrors the API request
         $app->get('/return', function() use ($app) {
