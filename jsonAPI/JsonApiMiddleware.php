@@ -62,9 +62,10 @@ class JsonApiMiddleware extends \Slim\Middleware {
 
         // Handle Empty response body
         $app->hook('slim.after.router', function () use ($app) {
-            //Fix sugested by: https://github.com/bdpsoft
-            //Will allow download request to flow
-            if($app->response()->header('Content-Type')==='application/octet-stream'){
+
+	        // don't render an empty response warning
+	        // if we have specified another content-type
+	        if($app->response()->header('Content-Type')!=='application/json'){
                 return;
             }
 
