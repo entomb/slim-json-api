@@ -45,9 +45,14 @@ class JsonApiMiddleware extends \Slim\Middleware {
 
         // Generic error handler
         $app->error(function (Exception $e) use ($app) {
-
-
-            $app->render(500,array(
+            
+            if ($e->getCode()) {
+                $errorCode = $e->getCode();
+            } else {
+                $errorCode = 500;
+            }
+            
+            $app->render($errorCode,array(
                 'error' => true,
                 'msg'   => \JsonApiMiddleware::_errorType($e->getCode()) .": ". $e->getMessage(),
             ));
