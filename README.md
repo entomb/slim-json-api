@@ -91,7 +91,7 @@ All requests will have an `error` param that defaults to false.
 
 ```
 
-You can optionally throw exceptions, the middleware will catch all exceptions and display error mensages.
+You can optionally throw exceptions, the middleware will catch all exceptions and display error messages.
 
 ```php
 
