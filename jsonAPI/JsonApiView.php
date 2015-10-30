@@ -46,29 +46,73 @@ class JsonApiView extends \Slim\View {
      * @var string
      */
     public $contentType = 'application/json';
+    
+    /**
+     *
+     * @var string
+     */
+    private $dataWraper;
+    
+    /**
+     *
+     * @var string
+     */
+    private $metaWrapper;
+
+
+    /**
+     * Construct JsonApiView instance
+     * @param type $dataWrapper (optional) Wrapper for data in response
+     * @param type $metaWrapper (optional) Wrapper for metadata in response
+     */
+    public function __construct($dataWrapper = NULL, $metaWrapper = NULL) {
+        parent::__construct();
+        $this->dataWraper = $dataWrapper;
+        $this->metaWrapper = $metaWrapper;
+    }
 
     public function render($status=200, $data = NULL) {
         $app = \Slim\Slim::getInstance();
 
         $status = intval($status);
 
-        $response = $this->all();
+        if ($this->dataWraper) {
+            $response[$this->dataWraper]=  $this->all();
+        } else {
+            $response = $this->all();
+        }
 
         //append error bool
         if (!$this->has('error')) {
-            $response['error'] = false;
+            if ($this->metaWrapper) {
+                $response[$this->metaWrapper]['error'] = false;
+            } else {
+                $response['error'] = false;
+            }
         }
 
         //append status code
-        $response['status'] = $status;
+        if ($this->metaWrapper) {
+            $response[$this->metaWrapper]['status'] = $status;
+            } else {
+            $response['status'] = $status;
+        }
 
 		//add flash messages
 		if(isset($this->data->flash) && is_object($this->data->flash)){
 		    $flash = $this->data->flash->getMessages();
             if (count($flash)) {
-                $response['flash'] = $flash;   
+                if ($this->metaWrapper) {
+                    $response[$this->metaWrapper]['flash'] = $flash;
+                } else {
+                    $response['flash'] = $flash;
+                }
             } else {
-                unset($response['flash']);
+                if ($this->metaWrapper) {
+                    unset($response[$this->metaWrapper]['flash']);
+                } else {
+                    unset($response['flash']);
+                }
             }
 		}
 		
