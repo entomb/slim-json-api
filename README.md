@@ -114,6 +114,32 @@ You can optionally throw exceptions, the middleware will catch all exceptions an
 
 ```
 
+##Embedding response data and metadata in separate containers
+It is possible to separate response metadata and business information in separate containers.
+
+####To make it possible just init JsonApiView with containers names
+```php
+   require 'vendor/autoload.php';
+
+    $app = new \Slim\Slim();
+
+    $app->view(new \JsonApiView("data", "meta"));
+    $app->add(new \JsonApiMiddleware());
+```
+
+####Response
+```json
+{
+    "data":{
+        "msg":"welcome to my API!"
+    },
+    "meta":{
+        "error":false,
+        "status":200
+    }
+}
+```
+
 
 ##routing specific requests to the API
 If your site is using regular HTML responses and you just want to expose an API point on a specific route,
