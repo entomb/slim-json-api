@@ -107,18 +107,16 @@ class JsonApiView extends \Slim\View {
         //add flash messages
         if (isset($this->data->flash) && is_object($this->data->flash)) {
             $flash = $this->data->flash->getMessages();
+            if ($this->dataWraper) {
+                unset($response[$this->dataWraper]['flash']);
+            } else {
+                unset($response['flash']);
+            }
             if (count($flash)) {
                 if ($this->metaWrapper) {
-                    unset($response[$this->dataWraper]['flash']);
                     $response[$this->metaWrapper]['flash'] = $flash;
                 } else {
                     $response['flash'] = $flash;
-                }
-            } else {
-                if ($this->metaWrapper) {
-                    unset($response[$this->dataWraper]['flash']);
-                } else {
-                    unset($response['flash']);
                 }
             }
         }
