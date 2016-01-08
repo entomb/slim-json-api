@@ -1,7 +1,7 @@
 {
     "name": "entomb/slim-json-api",
     "type": "library",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Slim extension to implement fast JSON API's",
     "keywords": ["slim","json","API","view", "middleware"],
     "homepage": "https://github.com/entomb/slim-json-api",
