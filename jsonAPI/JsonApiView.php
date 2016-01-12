@@ -71,52 +71,54 @@ class JsonApiView extends \Slim\View {
         $this->metaWrapper = $metaWrapper;
     }
 
-    public function render($status=200, $data = NULL) {
+    public function render($status = 200, $data = NULL, $dataOnly = false) {
         $app = \Slim\Slim::getInstance();
 
         $status = intval($status);
 
         if ($this->dataWraper) {
-            $response[$this->dataWraper]=  $this->all();
+            $response[$this->dataWraper] = $this->all();
         } else {
             $response = $this->all();
         }
 
-        //append error bool
-        if ($status<400) {
-            if ($this->metaWrapper) {
-                $response[$this->metaWrapper]['error'] = false;
-            } else {
-                $response['error'] = false;
-            }
-        } else {
-            if ($this->metaWrapper) {
-                $response[$this->metaWrapper]['error'] = true;
-            } else {
-                $response['error'] = true;
-            }
-        }
-
-        //append status code
-        if ($this->metaWrapper) {
-            $response[$this->metaWrapper]['status'] = $status;
-            } else {
-            $response['status'] = $status;
-        }
-
-        //add flash messages
-        if (isset($this->data->flash) && is_object($this->data->flash)) {
-            $flash = $this->data->flash->getMessages();
-            if ($this->dataWraper) {
-                unset($response[$this->dataWraper]['flash']);
-            } else {
-                unset($response['flash']);
-            }
-            if (count($flash)) {
+        if (! $dataOnly) {
+            //append error bool
+            if ($status<400) {
                 if ($this->metaWrapper) {
-                    $response[$this->metaWrapper]['flash'] = $flash;
+                    $response[$this->metaWrapper]['error'] = false;
                 } else {
-                    $response['flash'] = $flash;
+                    $response['error'] = false;
+                }
+            } else {
+                if ($this->metaWrapper) {
+                    $response[$this->metaWrapper]['error'] = true;
+                } else {
+                    $response['error'] = true;
+                }
+            }
+
+            //append status code
+            if ($this->metaWrapper) {
+                $response[$this->metaWrapper]['status'] = $status;
+                } else {
+                $response['status'] = $status;
+            }
+
+            //add flash messages
+            if (isset($this->data->flash) && is_object($this->data->flash)) {
+                $flash = $this->data->flash->getMessages();
+                if ($this->dataWraper) {
+                    unset($response[$this->dataWraper]['flash']);
+                } else {
+                    unset($response['flash']);
+                }
+                if (count($flash)) {
+                    if ($this->metaWrapper) {
+                        $response[$this->metaWrapper]['flash'] = $flash;
+                    } else {
+                        $response['flash'] = $flash;
+                    }
                 }
             }
         }
