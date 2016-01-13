@@ -59,6 +59,12 @@ class JsonApiView extends \Slim\View {
      */
     private $metaWrapper;
 
+    /**
+     * 
+     * @var bool
+     */
+    private $dataOnly = false;
+
 
     /**
      * Construct JsonApiView instance
@@ -71,7 +77,7 @@ class JsonApiView extends \Slim\View {
         $this->metaWrapper = $metaWrapper;
     }
 
-    public function render($status = 200, $data = NULL, $dataOnly = false) {
+    public function render($status = 200, $data = NULL) {
         $app = \Slim\Slim::getInstance();
 
         $status = intval($status);
@@ -82,7 +88,7 @@ class JsonApiView extends \Slim\View {
             $response = $this->all();
         }
 
-        if (! $dataOnly) {
+        if (! $this->dataOnly) {
             //append error bool
             if ($status<400) {
                 if ($this->metaWrapper) {
@@ -137,4 +143,13 @@ class JsonApiView extends \Slim\View {
         $app->stop();
     }
 
+    /**
+     * set whether to return only the data
+     *
+     * @param   bool    $dataOnly  
+     */
+    public function dataOnly($dataOnly = true)
+    {
+        $this->dataOnly = $dataOnly;
+    }
 }
