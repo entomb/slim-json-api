@@ -127,6 +127,8 @@ class JsonApiView extends \Slim\View {
                     }
                 }
             }
+        } else {
+            unset($response['flash'], $response['status'], $response['error']);
         }
 		
         $app->response()->status($status);
