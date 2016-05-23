@@ -51,9 +51,13 @@ class JsonApiMiddleware extends \Slim\Middleware {
             } else {
                 $errorCode = 500;
             }
+
+            // Log error with the same message
+            $message = \JsonApiMiddleware::_errorType($e->getCode()) .": ". $e->getMessage();
+            $app->getLog()->error($message);
             
             $app->render($errorCode,array(
-                'msg'   => \JsonApiMiddleware::_errorType($e->getCode()) .": ". $e->getMessage(),
+                'msg'   => $message,
             ));
         });
 
