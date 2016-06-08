@@ -54,10 +54,10 @@ class JsonApiMiddleware extends \Slim\Middleware {
 
             // Log error with the same message
             $message = \JsonApiMiddleware::_errorType($e->getCode()) .": ". $e->getMessage();
-            $app->getLog()->error($message);
-            
+            $app->getLog()->error($message . ' in ' . $e->getFile() . ' at line ' . $e->getLine());
+
             $app->render($errorCode,array(
-                'msg'   => $message,
+                'msg' => $message,
             ));
         });
 
