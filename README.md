@@ -1,11 +1,11 @@
-#slim-jsonAPI
+# slim-jsonAPI
 [![Latest Stable Version](https://poser.pugx.org/entomb/slim-json-api/v/stable.png)](https://packagist.org/packages/entomb/slim-json-api)
 [![Total Downloads](https://poser.pugx.org/entomb/slim-json-api/downloads.png)](https://packagist.org/packages/entomb/slim-json-api)
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/entomb/slim-json-api/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 This is an extension to the [SLIM framework](https://github.com/codeguy/Slim) to implement json API's with great ease.
 
-##Installation
+## Installation
 Using composer you can add use this as your composer.json
 
 ```json
@@ -18,7 +18,7 @@ Using composer you can add use this as your composer.json
 
 ```
 
-##Usage
+## Usage
 To include the middleware and view you just have to load them using the default _Slim_ way.
 Read more about Slim Here (https://github.com/codeguy/Slim#getting-started)
 
@@ -31,7 +31,7 @@ Read more about Slim Here (https://github.com/codeguy/Slim#getting-started)
     $app->add(new \JsonApiMiddleware());
 ```
 
-###.htaccess sample
+### .htaccess sample
 Here's an .htaccess sample for simple RESTful API's
 ```
 RewriteEngine On
@@ -39,11 +39,11 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [QSA,L]
 ```
 
-###example method
+### example method
 all your requests will be returning a JSON output.
 the usage will be `$app->render( (int)$HTTP_CODE, (array)$DATA);`
 
-####example Code 
+#### example Code 
 ```php
 
     $app->get('/', function() use ($app) {
@@ -55,7 +55,7 @@ the usage will be `$app->render( (int)$HTTP_CODE, (array)$DATA);`
 ```
 
 
-####example output
+#### example output
 ```json
 {
     "msg":"welcome to my API!",
@@ -65,7 +65,7 @@ the usage will be `$app->render( (int)$HTTP_CODE, (array)$DATA);`
 
 ```
 
-##Errors
+## Errors
 To display an error just set the `error => true` in your data array.
 All requests will have an `error` param that defaults to false.
 
@@ -114,10 +114,10 @@ You can optionally throw exceptions, the middleware will catch all exceptions an
 
 ```
 
-##Embedding response data and metadata in separate containers
+## Embedding response data and metadata in separate containers
 It is possible to separate response metadata and business information in separate containers.
 
-####To make it possible just init JsonApiView with containers names
+#### To make it possible just init JsonApiView with containers names
 ```php
    require 'vendor/autoload.php';
 
@@ -127,7 +127,7 @@ It is possible to separate response metadata and business information in separat
     $app->add(new \JsonApiMiddleware());
 ```
 
-####Response
+#### Response
 ```json
 {
     "data":{
@@ -141,7 +141,7 @@ It is possible to separate response metadata and business information in separat
 ```
 
 
-##routing specific requests to the API
+## routing specific requests to the API
 If your site is using regular HTML responses and you just want to expose an API point on a specific route,
 you can use Slim router middlewares to define this.
 
@@ -168,7 +168,7 @@ you can use Slim router middlewares to define this.
 ```
 
 
-##middleware
+## middleware
 The middleware will set some static routes for default requests.
 **if you dont want to use it**, you can copy its content code into your bootstrap file.
 
